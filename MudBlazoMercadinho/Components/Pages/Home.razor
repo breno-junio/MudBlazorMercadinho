@@ -1,0 +1,96 @@
+﻿@page "/"
+@inject MercadinhoService mercadinhoService
+
+<PageTitle>Início - Mercadinho</PageTitle>
+
+<!-- Banner Principal (Jumbotron) -->
+<MudPaper Elevation="2" Class="pa-6 mb-6 rounded-lg">
+    <MudText Typo="Typo.h3" Style="font-weight: bold;" Class="mb-2">
+        Mercadinho
+    </MudText>
+    <MudText Typo="Typo.h6" Color="Color.Secondary" Class="max-width-md">
+        Sistema simplificado de gestão de produtos, controle de estoque e registro de vendas operando em memória.
+    </MudText>
+</MudPaper>
+
+<!-- Cards Indicadores / Dashboard -->
+<MudGrid Spacing="4">
+    <!-- Card Produtos -->
+    <MudItem xs="12" md="4">
+        <MudCard Elevation="3" Class="h-100 d-flex flex-column justify-space-between" 
+             Style="background-color: var(--mud-palette-primary); color: var(--mud-palette-primary-text);">
+            <MudCardContent>
+                <MudText Typo="Typo.h6">Produtos Cadastrados</MudText>
+                <MudText Typo="Typo.h3" Style="font-weight: bold;" Class="mt-2">
+                    @totalProdutos
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton href="produtos" 
+                           Color="Color.Inherit" 
+                           EndIcon="@Icons.Material.Filled.ArrowForward" 
+                           Variant="Variant.Text">
+                    Gerenciar produtos
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <!-- Card Vendas -->
+    <MudItem xs="12" md="4">
+        <MudCard Elevation="3" Class="h-100 d-flex flex-column justify-space-between" 
+             Style="background-color: #536DFE; color: white;">
+            <MudCardContent>
+                <MudText Typo="Typo.h6">Vendas Realizadas</MudText>
+                <MudText Typo="Typo.h3" Style="font-weight: bold;" Class="mt-2">
+                    @totalVendas
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton href="vendas" 
+                           Color="Color.Inherit" 
+                           EndIcon="@Icons.Material.Filled.ArrowForward" 
+                           Variant="Variant.Text">
+                    Ir para o caixa
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <!-- Card Faturamento -->
+    <MudItem xs="12" md="4">
+        <MudCard Elevation="3" Class="h-100 d-flex flex-column justify-space-between" 
+             Style="background-color: #8C9EFF; color: white;">
+            <MudCardContent>
+                <MudText Typo="Typo.h6">Faturamento Total</MudText>
+                <MudText Typo="Typo.h3" Style="font-weight: bold;" Class="mt-2">
+                    @faturamentoTotal.ToString("C")
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton href="vendas" 
+                           Color="Color.Inherit" 
+                           EndIcon="@Icons.Material.Filled.ArrowForward" 
+                           Variant="Variant.Text">
+                    Ver histórico
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private int totalProdutos;
+    private int totalVendas;
+    private decimal faturamentoTotal;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var produtos = await mercadinhoService.ObterProdutosAgrupadosAsync();
+        var vendas = await mercadinhoService.ObterVendasAsync();
+
+        totalProdutos = produtos.Count;
+        totalVendas = vendas.Count;
+        faturamentoTotal = vendas.Sum(v => v.ValorTotal);
+    }
+}
