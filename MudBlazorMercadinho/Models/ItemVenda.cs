@@ -1,4 +1,4 @@
-﻿namespace MudBlazoMercadinho.Models;
+﻿namespace MudBlazorMercadinho.Models;
 
 public class ItemVenda
 {

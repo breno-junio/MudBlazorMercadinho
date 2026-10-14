@@ -1,6 +1,6 @@
-﻿using MudBlazoMercadinho.Models;
+﻿using MudBlazorMercadinho.Models;
 
-namespace MudBlazoMercadinho.Services;
+namespace MudBlazorMercadinho.Services;
 
 public class MercadinhoService
 {

@@ -1,6 +1,6 @@
-using MudBlazoMercadinho.Components;
-using MudBlazoMercadinho.Services;
+using MudBlazorMercadinho.Components;
 using MudBlazor.Services;
+using MudBlazorMercadinho.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
